@@ -1,5 +1,5 @@
 <?php
-define("ROOT_URL", "https://pabloariata-mp-commerce-php.herokuapp.com/");
+define("ROOT_URL", "https://pabloariata-mp-commerce-php.herokuapp.com");
 
 // SDK de Mercado Pago
 require __DIR__  . '/vendor/autoload.php';
