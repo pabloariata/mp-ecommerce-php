@@ -1,68 +1,3 @@
-<?php
-define("ROOT_URL", "https://pabloariata-mp-commerce-php.herokuapp.com/");
-
-// SDK de Mercado Pago
-require __DIR__  . '/vendor/autoload.php';
-
-// Agrega credenciales
-MercadoPago\SDK::setAccessToken("APP_USR-6317427424180639-042414-47e969706991d3a442922b0702a0da44-469485398");
-MercadoPago\SDK::setIntegratorId("dev_24c65fb163bf11ea96500242ac130004");
-
-// Crea un objeto de preferencia
-$preference = new MercadoPago\Preference();
-
-// Crea un objeto payer
-$payer = new MercadoPago\Payer();
-$payer->name = "Lalo";
-$payer->surname = "Landa";
-$payer->email = "test_user_63274575@testuser.com";
-$payer->date_created = date('c');
-$payer->phone = array(
-  "area_code" => "11",
-  "number" => "22223333"
-);
-
-$payer->address = array(
-  "street_name" => "False",
-  "street_number" => 123,
-  "zip_code" => "1111"
-);
-
-// Crea un ítem en la preferencia
-$item = new MercadoPago\Item();
-$item->id = "1234";
-$item->title = $_POST['title'];
-$item->description = 'Dispositivo móvil de Tienda e-commerce';
-$item->quantity = 1;
-$item->currency_id = "ARS";
-$item->unit_price = $_POST['price'];
-$item->picture_url = ROOT_URL . substr($_POST['img'], 1);
-
-// Se arma la preferencia de pago
-$preference->payer = $payer;
-$preference->items = array($item);
-$preference->external_reference = "pablo@18dev.com";
-$preference->notification_url = ROOT_URL . "/notifications.php";
-$preference->back_urls = array(
-    "success" => ROOT_URL . "/success.php",
-    "failure" => ROOT_URL . "/failure.php",
-    "pending" => ROOT_URL . "/pending.php",
-);
-$preference->auto_return = "approved";
-$preference->payment_methods = array(
-    "excluded_payment_methods" => array(
-        array("id" => "amex")
-    ),
-    "excluded_payment_types" => array(
-        array("id" => "atm")
-    ),
-    "installments" => 6
-);
-    
-$preference->save();
-
-// echo "<pre>".print_r($preference, true)."</pre>";exit;
-?>
 <!DOCTYPE html>
 <html
     class="supports-animation supports-columns svg no-touch no-ie no-oldie no-ios supports-backdrop-filter as-mouseuser"
@@ -559,7 +494,7 @@ $preference->save();
                                     <button class="as-filter-button" aria-expanded="true"
                                         aria-controls="as-search-filters" type="button">
                                         <h2 class=" as-filter-button-text">
-                                            Smartphones
+                                            Operación pendiente
                                         </h2>
                                     </button>
 
@@ -569,57 +504,8 @@ $preference->save();
                             </div>
                         </div>
                         <div class="as-accessories-results  as-search-desktop">
-                            <div class="width:60%">
-                                <div class="as-producttile-tilehero with-paddlenav " style="float:left;">
-                                    <div class="as-dummy-container as-dummy-img">
-
-                                        <img src="./assets/wireless-headphones"
-                                            class="ir ir item-image as-producttile-image  "
-                                            style="max-width: 70%;max-height: 70%;" alt="" width="445" height="445">
-                                    </div>
-                                    <div class="images mini-gallery gal5 " style="margin: 80px 0;">
-
-
-                                        <div class="as-isdesktop with-paddlenav with-paddlenav-onhover">
-                                            <div class="clearfix image-list xs-no-js as-util-relatedlink relatedlink"
-                                                data-relatedlink="6|Powerbeats3 Wireless Earphones - Neighborhood Collection - Brick Red|MPXP2">
-                                                <div class="as-tilegallery-element as-image-selected">
-                                                    <div class=""></div>
-                                                    <img src="./assets/003.jpg"
-                                                        class="ir ir item-image as-producttile-image" alt="" width="445"
-                                                        height="445"
-                                                        style="content:-webkit-image-set(url(<?php echo $_POST['img'] ?>) 2x);">
-                                                </div>
-
-                                            </div>
-
-
-                                        </div>
-
-
-
-                                    </div>
-
-                                </div>
-                                <div class="as-producttile-info" style="float:left;min-height: 168px;">
-                                    <div class="as-producttile-titlepricewraper" style="min-height: 128px;">
-                                        <div class="as-producttile-title">
-                                            <h3 class="as-producttile-name">
-                                                <p class="as-producttile-tilelink">
-                                                    <span data-ase-truncate="2"><?php echo $_POST['title'] ?></span>
-                                                </p>
-
-                                            </h3>
-                                        </div>
-                                        <h3>
-                                            <?php echo "$" . number_format($_POST['price'],0, ',', '.') ?>
-                                        </h3>
-                                        <h3>
-                                            <?php //echo "$" . $_POST['unit'] ?>
-                                        </h3>
-                                    </div>
-                                    <a href="<?php echo $preference->init_point; ?>">Pagar con Mercado Pago</a>
-                                </div>
+                            <div class="width:60%" style="text-align:center; padding:100px">
+                                <strong>Su operación se encuentra pendiente de confirmación.</strong>
                             </div>
                         </div>
                     </div>
@@ -638,7 +524,7 @@ $preference->save();
     </div>
 
 
-    <script src="https://www.mercadopago.com/v2/security.js" view="item"></script>
+    <script src="https://www.mercadopago.com/v2/security.js" view=""></script>
 </body>
 
 </html>
