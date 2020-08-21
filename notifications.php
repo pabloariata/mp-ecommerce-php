@@ -11,7 +11,7 @@ $MP_id_payment = $_GET["id"];
 
 $postdata = file_get_contents("php://input");
 // file_put_contents('json_orders/'.time().'.txt' , $postdata);
-file_put_contents('json_orders/json_final.txt' , $postdata);
+file_put_contents('json_orders/'.time().'.txt' , $postdata);
 
 
 ?>
